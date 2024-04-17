@@ -12,7 +12,8 @@ public class PlanetController {
 	}
 
 	public void getAllPlanets(int currentUserId) {
-		// TODO: implement
+		System.out.println("These are your planets");
+		System.out.println(planetService.getAllPlanets(currentUserId));
 	}
 
 	public void getPlanetByName(int currentUserId, String name) {
