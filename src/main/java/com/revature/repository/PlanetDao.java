@@ -93,7 +93,16 @@ public class PlanetDao {
 	}
 
 	public boolean deletePlanetById(int planetId) {
-		// TODO: implement
-		return false;
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "delete from planets where id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, planetId);
+			int rowCount = ps.executeUpdate();
+			if(rowCount == 0)return false;
+			else return true;
+		}catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

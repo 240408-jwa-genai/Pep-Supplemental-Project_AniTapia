@@ -97,8 +97,17 @@ public class MoonDao {
 	}
 
 	public boolean deleteMoonById(int moonId) {
-		// TODO: implement
-		return false;
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "delete from moons where id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, moonId);
+			int rowCount = ps.executeUpdate();
+			if(rowCount == 0)return false;
+			else return true;
+		}catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 	public List<Moon> getMoonsFromPlanet(int planetId) {

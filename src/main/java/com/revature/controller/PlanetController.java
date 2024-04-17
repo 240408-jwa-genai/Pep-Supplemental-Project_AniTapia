@@ -17,18 +17,26 @@ public class PlanetController {
 	}
 
 	public void getPlanetByName(int currentUserId, String name) {
-		// TODO: implement
+		Planet p = planetService.getPlanetByName(currentUserId,name);
+		if(p.getId() != 0) System.out.println("This is your planet:\n" + p);
+		else System.out.println("Unable to retrive planet. Please dobule check your input");
 	}
 
 	public void getPlanetByID(int currentUserId, int id) {
-		// TODO: implement
+		Planet p = planetService.getPlanetById(currentUserId,id);
+		if(p.getId() != 0) System.out.println("This is your planet:\n" + p);
+		else System.out.println("Unable to retrive planet. Please dobule check your input");
 	}
 
 	public void createPlanet(int currentUserId, Planet planet) {
-		// TODO: implement
+		Planet planetResponse = planetService.createPlanet(currentUserId,planet);
+		if(planetResponse.getId() != 0) System.out.println("Planet created successfully!");
+		else System.out.println("Planet creation failed");
 	}
 
 	public void deletePlanet(int currentUserId, int id) {
-		// TODO: implement
+		Boolean planetDeleted = planetService.deletePlanetById(id);
+		if(planetDeleted) System.out.println("Planet with id: " + id + " has been successfully deleted");
+		else System.out.println("failed to delete planet with id: " + id);
 	}
 }

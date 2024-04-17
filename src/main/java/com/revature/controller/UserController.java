@@ -14,13 +14,13 @@ public class UserController {
 		this.userService = userService;
 	}
 
-	public void authenticate(UsernamePasswordAuthentication loginRequestData) {
+	public Boolean authenticate(UsernamePasswordAuthentication loginRequestData) {
 		User possibleUser = userService.authenticate(loginRequestData);
 		if(possibleUser.getId() != 0){
 			MainDriver.loggedInUserId = possibleUser.getId();
-			System.out.println("Hello " + possibleUser.getUsername() + "! Welcome to the Planetarium");
+			return true;
 		}
-		else System.out.println("Username/Password combo invalid, please try again");
+		else return false;//System.out.println("Username/Password combo invalid, please try again");
 	}
 
 	public void register(User registerRequestData) {

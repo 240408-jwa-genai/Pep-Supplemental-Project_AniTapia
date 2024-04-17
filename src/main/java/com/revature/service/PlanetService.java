@@ -40,7 +40,6 @@ public class PlanetService {
 	}
 
 	public boolean deletePlanetById(int planetId) {
-		// TODO Auto-generated method stub
-		return false;
+		return dao.deletePlanetById(planetId);
 	}
 }

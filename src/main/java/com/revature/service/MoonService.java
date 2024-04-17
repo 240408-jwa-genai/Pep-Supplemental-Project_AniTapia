@@ -40,7 +40,7 @@ public class MoonService {
 	}
 
 	public boolean deleteMoonById(int moonId) {
-		return false;
+		return dao.deleteMoonById(moonId);
 	}
 
 	public List<Moon> getMoonsFromPlanet(int myPlanetId) {
