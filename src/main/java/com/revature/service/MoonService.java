@@ -32,8 +32,10 @@ public class MoonService {
 	public Moon createMoon(Moon m) {
 		if(m.getName().length() <= 30){
 			Moon retrievedMoon = dao.getMoonByName(m.getName());
-			if(retrievedMoon == null){
-				return  dao.createMoon(m);
+			if(retrievedMoon != null){
+				String retrievedMoonName = retrievedMoon.getName();
+				String mName = m.getName();
+				if(!mName.equals(retrievedMoonName))return dao.createMoon(m);
 			}
 		}
 		return new Moon();

@@ -5,10 +5,18 @@ import java.sql.SQLException;
 import java.sql.SQLOutput;
 import java.util.Scanner;
 
+import com.revature.controller.MoonController;
+import com.revature.controller.PlanetController;
 import com.revature.controller.UserController;
+import com.revature.models.Moon;
+import com.revature.models.Planet;
 import com.revature.models.User;
 import com.revature.models.UsernamePasswordAuthentication;
+import com.revature.repository.MoonDao;
+import com.revature.repository.PlanetDao;
 import com.revature.repository.UserDao;
+import com.revature.service.MoonService;
+import com.revature.service.PlanetService;
 import com.revature.service.UserService;
 import com.revature.utilities.ConnectionUtil;
 
@@ -18,8 +26,14 @@ public class MainDriver {
     public static Boolean loggenIn = false;
 
     public static UserDao userDao = new UserDao();
+    public static PlanetDao planetDao = new PlanetDao();
+    public static MoonDao moonDao = new MoonDao();
     public static UserService userService = new UserService(userDao);
+    public static MoonService moonService = new MoonService(moonDao);
+    public static PlanetService planetService = new PlanetService(planetDao);
     public static UserController userController = new UserController(userService);
+    public static MoonController moonController = new MoonController(moonService);
+    public static PlanetController planetController = new PlanetController(planetService);
 
     public static void main(String[] args) {
         // TODO: implement main method to initialize layers and run the application
@@ -59,39 +73,62 @@ public class MainDriver {
                                     "\n6: Get all of your moons\n7: Get all moons belonging to a planet\n8: Get moon by name" +
                                     "\n9: Get moon by id\n10: Add a moon\n11: Remove a moon");
                             System.out.print("Enter the number associated with the action you want to perform or any other key to log out: ");
-                            int userChoice = scanner.nextInt();
+                            String userChoice = scanner.nextLine();
                             switch(userChoice){
-                                case 1:
+                                case "1":
                                     System.out.println("You chose to get all of your planets");
+                                    planetController.getAllPlanets(loggedInUserId);
                                     break;
-                                case 2:
+                                case "2":
                                     System.out.println("You chose to get planet by name");
+                                    System.out.print("Enter the name of the planet you want to get: ");
+                                    String planetName = scanner.nextLine();
+                                    planetController.getPlanetByName(loggedInUserId,planetName);
                                     break;
-                                case 3:
+                                case "3":
                                     System.out.println("You chose to get planet by id");
+                                    System.out.print("Enter the planetId of the planet you want to get: ");
+                                    String planetId = scanner.nextLine();
+                                    planetController.getPlanetByID(loggedInUserId,Integer.parseInt(planetId));
                                     break;
-                                case 4:
+                                case "4":
                                     System.out.println("You chose to add a planet");
+                                    System.out.print("Enter the name(less than or 30 characters) of the new planet: ");
+                                    String newPlanetName = scanner.nextLine();
+                                    Planet newPlanet = new Planet();
+                                    newPlanet.setName(newPlanetName);
+                                    newPlanet.setOwnerId(loggedInUserId);
+                                    planetController.createPlanet(loggedInUserId,newPlanet);
+
                                     break;
-                                case 5:
+                                case "5":
                                     System.out.println("You chose to remove a planet");
                                     break;
-                                case 6:
+                                case "6":
                                     System.out.println("You chose to get all of your moons");
                                     break;
-                                case 7:
+                                case "7":
                                     System.out.println("You chose to get all of your moons belonging to a planet");
                                     break;
-                                case 8:
+                                case "8":
                                     System.out.println("You chose to get a moon by name");
                                     break;
-                                case 9:
+                                case "9":
                                     System.out.println("You chose to get a moon by id");
                                     break;
-                                case 10:
+                                case "10":
                                     System.out.println("You chose to add a moon");
+                                    planetController.getAllPlanets(loggedInUserId);
+                                    System.out.print("Enter the planetId of the planet you want to add a moon for: ");
+                                    planetId = scanner.nextLine();
+                                    System.out.print("Enter the name(less than or 30 characters) of the new moon: ");
+                                    String moonName = scanner.nextLine();
+                                    Moon newMoon = new Moon();
+                                    newMoon.setName(moonName);
+                                    newMoon.setMyPlanetId(Integer.parseInt(planetId));
+                                    moonController.createMoon(loggedInUserId,newMoon);
                                     break;
-                                case 11:
+                                case "11":
                                     System.out.println("You chose to remove a moon");
                                     break;
                                 default:

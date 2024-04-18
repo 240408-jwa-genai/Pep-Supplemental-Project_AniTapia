@@ -32,7 +32,9 @@ public class MoonController {
 	}
 
 	public void createMoon(int currentUserId, Moon moon) {
-		// TODO: implement
+		Moon moonResponse = moonService.createMoon(moon);
+		if(moonResponse.getId() != 0) System.out.println("Moon created successfully");
+		else System.out.println("Moon creation failed");
 	}
 
 	public void deleteMoon(int id) {

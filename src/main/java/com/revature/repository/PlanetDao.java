@@ -16,12 +16,12 @@ public class PlanetDao {
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1,currentUserId);
 			List<Planet> planetList = new ArrayList<Planet>();
-			Planet planet = new Planet();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
+				Planet planet = new Planet();
 				planet.setId(rs.getInt("id"));
 				planet.setName(rs.getString("name"));
-				planet.setOwnerId(rs.getInt("owenerId"));
+				planet.setOwnerId(rs.getInt("ownerId"));
 				planetList.add(planet);
 			}
 			return planetList;
@@ -41,7 +41,7 @@ public class PlanetDao {
 			if(rs.next()){
 				possiblePlanet.setId(rs.getInt("id"));
 				possiblePlanet.setName(rs.getString("name"));
-				possiblePlanet.setOwnerId(rs.getInt("owenerId"));
+				possiblePlanet.setOwnerId(rs.getInt("ownerId"));
 			}
 			return possiblePlanet;
 
@@ -61,7 +61,7 @@ public class PlanetDao {
 			if(rs.next()){
 				possiblePlanet.setId(rs.getInt("id"));
 				possiblePlanet.setName(rs.getString("name"));
-				possiblePlanet.setOwnerId(rs.getInt("owenerId"));
+				possiblePlanet.setOwnerId(rs.getInt("ownerId"));
 			}
 			return possiblePlanet;
 
@@ -73,7 +73,7 @@ public class PlanetDao {
 
 	public Planet createPlanet(Planet p) {
 		try(Connection connection = ConnectionUtil.createConnection()){
-			String sql = "insert into planets (name, owenerId) values (?,?)";
+			String sql = "insert into planets (name, ownerId) values (?,?)";
 			PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1,p.getName());
 			ps.setInt(2,p.getOwnerId());

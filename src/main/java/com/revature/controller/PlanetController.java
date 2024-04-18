@@ -19,13 +19,13 @@ public class PlanetController {
 	public void getPlanetByName(int currentUserId, String name) {
 		Planet p = planetService.getPlanetByName(currentUserId,name);
 		if(p.getId() != 0) System.out.println("This is your planet:\n" + p);
-		else System.out.println("Unable to retrive planet. Please dobule check your input");
+		else System.out.println("Unable to retrieve planet. Please double check your input");
 	}
 
 	public void getPlanetByID(int currentUserId, int id) {
 		Planet p = planetService.getPlanetById(currentUserId,id);
 		if(p.getId() != 0) System.out.println("This is your planet:\n" + p);
-		else System.out.println("Unable to retrive planet. Please dobule check your input");
+		else System.out.println("Unable to retrieve planet. Please double check your input");
 	}
 
 	public void createPlanet(int currentUserId, Planet planet) {

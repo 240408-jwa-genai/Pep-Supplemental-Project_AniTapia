@@ -20,9 +20,9 @@ public class MoonDao {
 			String sql = "select * from moons";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			List<Moon> moonList = new ArrayList<Moon>();
-			Moon moon = new Moon();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
+				Moon moon = new Moon();
 				moon.setId(rs.getInt("id"));
 				moon.setName(rs.getString("name"));
 				moon.setMyPlanetId(rs.getInt("myPlanetId"));
@@ -116,9 +116,9 @@ public class MoonDao {
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1,planetId);
 			List<Moon> moonList = new ArrayList<Moon>();
-			Moon moon = new Moon();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
+				Moon moon = new Moon();
 				moon.setId(rs.getInt("id"));
 				moon.setName(rs.getString("name"));
 				moon.setMyPlanetId(rs.getInt("myPlanetId"));

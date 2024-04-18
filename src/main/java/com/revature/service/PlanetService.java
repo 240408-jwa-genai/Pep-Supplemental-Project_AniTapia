@@ -32,8 +32,10 @@ public class PlanetService {
 	public Planet createPlanet(int ownerId, Planet planet) {
 		if(planet.getName().length() <= 30){
 			Planet retrievedPlanet = dao.getPlanetByName(planet.getName());
-			if(retrievedPlanet == null){
-				return dao.createPlanet(planet);
+			if(retrievedPlanet != null){
+				String retrievedPlanetName = retrievedPlanet.getName();
+				String planetName = planet.getName();
+				if(!planetName.equals(retrievedPlanetName))return dao.createPlanet(planet);
 			}
 		}
 		return new Planet();
