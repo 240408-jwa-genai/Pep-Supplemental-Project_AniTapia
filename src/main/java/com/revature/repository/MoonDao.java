@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.MainDriver;
 import com.revature.exceptions.MoonFailException;
 import com.revature.models.Moon;
 import com.revature.models.Planet;
@@ -15,10 +16,12 @@ import com.revature.utilities.ConnectionUtil;
 
 public class MoonDao {
     
-    public List<Moon> getAllMoons() {
+    public List<Moon> getAllMoons(int currentUserId) {
 		try(Connection connection = ConnectionUtil.createConnection()){
-			String sql = "select * from moons";
+			String sql = "SELECT m.id, m.name, m.myPlanetId  from moons m, planets p, users u\n" +
+					"WHERE m.myPlanetId = p.id and p.ownerId = u.id and u.id = ?;";
 			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1, currentUserId);
 			List<Moon> moonList = new ArrayList<Moon>();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){
@@ -29,6 +32,28 @@ public class MoonDao {
 				moonList.add(moon);
 			}
 			return moonList;
+		}catch (SQLException e){
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	public Moon getMoonByName(String moonName, int currentUserId) {
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "SELECT m.id, m.name, m.myPlanetId  from moons m, planets p, users u\n" +
+					"WHERE m.myPlanetId = p.id and p.ownerId = u.id and m.name = ? and u.id = ?";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setString(1,moonName);
+			ps.setInt(2,currentUserId);
+			Moon possibleMoon = new Moon();
+			ResultSet rs = ps.executeQuery();
+			if(rs.next()){
+				possibleMoon.setId(rs.getInt("id"));
+				possibleMoon.setName(rs.getString("name"));
+				possibleMoon.setMyPlanetId(rs.getInt("myPlanetId"));
+			}
+			return possibleMoon;
+
 		}catch (SQLException e){
 			e.printStackTrace();
 			return null;
@@ -55,11 +80,13 @@ public class MoonDao {
 		}
 	}
 
-	public Moon getMoonById(int moonId) {
+	public Moon getMoonById(int moonId, int currentUserId) {
 		try(Connection connection = ConnectionUtil.createConnection()){
-			String sql = "select * from moons where id = ?";
+			String sql = "SELECT m.id, m.name, m.myPlanetId  from moons m, planets p, users u\n" +
+					"WHERE m.myPlanetId = p.id and p.ownerId = u.id and m.id = ? and u.id = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
 			ps.setInt(1,moonId);
+			ps.setInt(2,currentUserId);
 			Moon possibleMoon = new Moon();
 			ResultSet rs = ps.executeQuery();
 			if(rs.next()){
@@ -110,11 +137,27 @@ public class MoonDao {
 		}
 	}
 
-	public List<Moon> getMoonsFromPlanet(int planetId) {
+	public boolean deletePlanetMoons(int planetId) {
 		try(Connection connection = ConnectionUtil.createConnection()){
-			String sql = "select * from moons where myPlanetId = ?";
+			String sql = "delete from moons where myPlanetId = ?";
 			PreparedStatement ps = connection.prepareStatement(sql);
-			ps.setInt(1,planetId);
+			ps.setInt(1, planetId);
+			int rowCount = ps.executeUpdate();
+			if(rowCount == 0)return false;
+			else return true;
+		}catch (SQLException e){
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	public List<Moon> getMoonsFromPlanet(int planetId,int currentUserId) {
+		try(Connection connection = ConnectionUtil.createConnection()){
+			String sql = "SELECT m.id, m.name, m.myPlanetId  from moons m, planets p, users u\n" +
+					"WHERE m.myPlanetId = p.id and p.ownerId = u.id and u.id = ? and m.myPlanetId  = ?;";
+			PreparedStatement ps = connection.prepareStatement(sql);
+			ps.setInt(1,currentUserId);
+			ps.setInt(2,planetId);
 			List<Moon> moonList = new ArrayList<Moon>();
 			ResultSet rs = ps.executeQuery();
 			while(rs.next()){

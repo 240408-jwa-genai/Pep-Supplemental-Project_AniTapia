@@ -34,9 +34,9 @@ public class PlanetController {
 		else System.out.println("Planet creation failed");
 	}
 
-	public void deletePlanet(int currentUserId, int id) {
-		Boolean planetDeleted = planetService.deletePlanetById(id);
-		if(planetDeleted) System.out.println("Planet with id: " + id + " has been successfully deleted");
+	public void deletePlanet(int id, int currentUserId) {
+		Boolean planetDeleted = planetService.deletePlanetById(id, currentUserId);
+		if(planetDeleted) System.out.println("Planet with id: " + id + " and all of its moons have been successfully deleted");
 		else System.out.println("failed to delete planet with id: " + id);
 	}
 }

@@ -13,21 +13,21 @@ public class MoonController {
 	}
 
 	public void getAllMoons(int currentUserId) {
-//		System.out.println("These are all the moons the in the planetarium");
-//		System.out.println();
+		System.out.println("These are all the moons the in the planetarium");
+		System.out.println(moonService.getAllMoons(currentUserId));
 	}
 
-	public void getMoonByName(int currentUserId, String name) {
-		Moon m = moonService.getMoonByName(currentUserId,name);
+	public void getMoonByName(String moonName, int currentUserId) {
+		Moon m = moonService.getMoonByName(moonName,currentUserId);
 		if(m.getId() != 0) System.out.println("This is the moon:\n" + m);
-		else System.out.println("Unable to retrive moon. Please dobule check your input");
+		else System.out.println("Unable to retrieve moon. Please double check your input");
 
 	}
 
-	public void getMoonById(int currentUserId, int id) {
-		Moon m= moonService.getMoonById(currentUserId,id);
+	public void getMoonById(int moonId, int currentUserId) {
+		Moon m= moonService.getMoonById(moonId,currentUserId);
 		if(m.getId() != 0) System.out.println("This is your moon:\n" + m);
-		else System.out.println("Unable to retrive planet. Please dobule check your input");
+		else System.out.println("Unable to retrieve moon. Please double check your input");
 
 	}
 
@@ -37,13 +37,14 @@ public class MoonController {
 		else System.out.println("Moon creation failed");
 	}
 
-	public void deleteMoon(int id) {
-		Boolean moonDeleted = moonService.deleteMoonById(id);
+	public void deleteMoon(int id, int currentUserId) {
+		Boolean moonDeleted = moonService.deleteMoonById(id,currentUserId);
 		if(moonDeleted) System.out.println("Moon with id: " + id + " has been successfully deleted.");
 		else System.out.println("failed to delete moon with id: " + id);
 	}
 	
-	public void getPlanetMoons(int myPlanetId) {
-		// TODO: implement
+	public void getPlanetMoons(int myPlanetId,int currentUserId) {
+		System.out.println("These are all the moons the in the planetarium belonging to planet with planedId " + myPlanetId);
+		System.out.println(moonService.getMoonsFromPlanet(myPlanetId,currentUserId));
 	}
 }

@@ -3,11 +3,13 @@ package com.revature.service;
 import java.util.List;
 
 import com.revature.models.Planet;
+import com.revature.repository.MoonDao;
 import com.revature.repository.PlanetDao;
 
 public class PlanetService {
 
 	private PlanetDao dao;
+	private MoonDao moonDao = new MoonDao();
 
 	public PlanetService(PlanetDao dao){
 		this.dao = dao;
@@ -41,7 +43,12 @@ public class PlanetService {
 		return new Planet();
 	}
 
-	public boolean deletePlanetById(int planetId) {
-		return dao.deletePlanetById(planetId);
+	public boolean deletePlanetById(int planetId, int currentUserId) {
+		Planet retrievedPlanet = dao.getPlanetById(planetId);
+		if(retrievedPlanet.getOwnerId() == currentUserId){
+			moonDao.deletePlanetMoons(planetId);
+			return dao.deletePlanetById(planetId);
+		}
+		else return false;
 	}
 }
