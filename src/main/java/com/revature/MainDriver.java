@@ -81,12 +81,14 @@ public class MainDriver {
                                     break;
                                 case "2":
                                     System.out.println("You chose to get planet by name");
+                                    planetController.getAllPlanets(loggedInUserId);
                                     System.out.print("Enter the name of the planet you want to get: ");
                                     String planetName = scanner.nextLine();
                                     planetController.getPlanetByName(loggedInUserId,planetName);
                                     break;
                                 case "3":
                                     System.out.println("You chose to get planet by id");
+                                    planetController.getAllPlanets(loggedInUserId);
                                     System.out.print("Enter the planetId of the planet you want to get: ");
                                     String planetId = scanner.nextLine();
                                     planetController.getPlanetByID(loggedInUserId,Integer.parseInt(planetId));
@@ -121,12 +123,14 @@ public class MainDriver {
                                     break;
                                 case "8":
                                     System.out.println("You chose to get a moon by name");
+                                    moonController.getAllMoons(loggedInUserId);
                                     System.out.print("Enter the name of the moon you want to get: ");
                                     String moonName = scanner.nextLine();
                                     moonController.getMoonByName(moonName,loggedInUserId);
                                     break;
                                 case "9":
                                     System.out.println("You chose to get a moon by id");
+                                    moonController.getAllMoons(loggedInUserId);
                                     System.out.print("Enter the moonId of the moon you want to get: ");
                                     String moonId = scanner.nextLine();
                                     moonController.getMoonById(Integer.parseInt(moonId),loggedInUserId);

@@ -4,6 +4,8 @@ import com.revature.models.Moon;
 import com.revature.models.Planet;
 import com.revature.service.MoonService;
 
+import java.util.List;
+
 public class MoonController {
 	
 	private MoonService moonService;
@@ -40,11 +42,16 @@ public class MoonController {
 	public void deleteMoon(int id, int currentUserId) {
 		Boolean moonDeleted = moonService.deleteMoonById(id,currentUserId);
 		if(moonDeleted) System.out.println("Moon with id: " + id + " has been successfully deleted.");
-		else System.out.println("failed to delete moon with id: " + id);
+		else System.out.println("Failed to delete moon. Please double check your input");
 	}
 	
 	public void getPlanetMoons(int myPlanetId,int currentUserId) {
-		System.out.println("These are all the moons the in the planetarium belonging to planet with planedId " + myPlanetId);
-		System.out.println(moonService.getMoonsFromPlanet(myPlanetId,currentUserId));
+		List<Moon> moonList = moonService.getMoonsFromPlanet(myPlanetId,currentUserId);
+		if(moonList.size() != 0){
+			System.out.println("These are all the moons the in the planetarium belonging to planet with planedId " + myPlanetId);
+			System.out.println(moonList);
+		}
+		else System.out.println("Planet is empty of moons or input didn't match any of your planets");
+
 	}
 }

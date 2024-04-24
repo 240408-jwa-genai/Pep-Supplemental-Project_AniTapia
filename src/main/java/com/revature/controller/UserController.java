@@ -20,22 +20,14 @@ public class UserController {
 			MainDriver.loggedInUserId = possibleUser.getId();
 			return true;
 		}
-		else return false;//System.out.println("Username/Password combo invalid, please try again");
+		else return false;
 	}
 
 	public void register(User registerRequestData) {
 		// TODO: implement
 		User userResponse = userService.register(registerRequestData);
-		if(userResponse.getId() != 0)System.out.println("Registration successfull!");
+		if(userResponse.getId() != 0)System.out.println("Registration successfully!");
 		else System.out.println("Registration failed: please double check your username and password and try again.");
 	}
 
-	public void logout() {
-		// TODO: implement
-	}
-	
-	public boolean checkAuthorization(int userId) {	
-		// TODO: implement
-		return false;
-	}
 }
