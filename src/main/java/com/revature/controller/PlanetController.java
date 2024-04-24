@@ -30,12 +30,10 @@ public class PlanetController {
 	}
 
 	public void createPlanet(int currentUserId, Planet planet) {
-		if(planet.getName().equals("pluto")) System.out.println("Nice try! Pluto is not a planet.");
-		else{
-			Planet planetResponse = planetService.createPlanet(currentUserId,planet);
-			if(planetResponse.getId() != 0) System.out.println("Planet created successfully!");
-			else System.out.println("Planet creation failed. Please double check your input");
-		}
+
+		Planet planetResponse = planetService.createPlanet(currentUserId,planet);
+		if(planetResponse.getId() != 0) System.out.println("Planet created successfully!");
+		else System.out.println("Planet creation failed. Please double check your input");
 	}
 
 	public void deletePlanet(int id, int currentUserId) {

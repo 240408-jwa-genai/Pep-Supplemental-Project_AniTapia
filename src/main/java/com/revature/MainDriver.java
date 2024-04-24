@@ -35,6 +35,15 @@ public class MainDriver {
     public static MoonController moonController = new MoonController(moonService);
     public static PlanetController planetController = new PlanetController(planetService);
 
+    public static int switchToInt(String id){
+        try{
+            int intID = Integer.parseInt(id);
+            return intID;
+        }catch (NumberFormatException e){
+            return 0;
+        }
+    }
+
     public static void main(String[] args) {
         // TODO: implement main method to initialize layers and run the application
         try(Scanner scanner = new Scanner(System.in)){
@@ -91,7 +100,7 @@ public class MainDriver {
                                     planetController.getAllPlanets(loggedInUserId);
                                     System.out.print("Enter the planetId of the planet you want to get: ");
                                     String planetId = scanner.nextLine();
-                                    planetController.getPlanetByID(loggedInUserId,Integer.parseInt(planetId));
+                                    planetController.getPlanetByID(loggedInUserId,switchToInt(planetId));
                                     break;
                                 case "4":
                                     System.out.println("You chose to add a planet");
@@ -107,7 +116,7 @@ public class MainDriver {
                                     planetController.getAllPlanets(loggedInUserId);
                                     System.out.print("Enter the planetId of the planet you want to remove: ");
                                     planetId = scanner.nextLine();
-                                    planetController.deletePlanet(Integer.parseInt(planetId), loggedInUserId);
+                                    planetController.deletePlanet(switchToInt(planetId), loggedInUserId);
                                     break;
                                 case "6":
                                     System.out.println("You chose to get all of your moons");
@@ -118,7 +127,7 @@ public class MainDriver {
                                     planetController.getAllPlanets(loggedInUserId);
                                     System.out.print("Enter the planetId of the planet you want to get the moons of: ");
                                     planetId = scanner.nextLine();
-                                    moonController.getPlanetMoons(Integer.parseInt(planetId),loggedInUserId);
+                                    moonController.getPlanetMoons(switchToInt(planetId),loggedInUserId);
 
                                     break;
                                 case "8":
@@ -133,7 +142,7 @@ public class MainDriver {
                                     moonController.getAllMoons(loggedInUserId);
                                     System.out.print("Enter the moonId of the moon you want to get: ");
                                     String moonId = scanner.nextLine();
-                                    moonController.getMoonById(Integer.parseInt(moonId),loggedInUserId);
+                                    moonController.getMoonById(switchToInt(moonId),loggedInUserId);
 
                                     break;
                                 case "10":
@@ -145,7 +154,7 @@ public class MainDriver {
                                     moonName = scanner.nextLine();
                                     Moon newMoon = new Moon();
                                     newMoon.setName(moonName);
-                                    newMoon.setMyPlanetId(Integer.parseInt(planetId));
+                                    newMoon.setMyPlanetId(switchToInt(planetId));
                                     moonController.createMoon(loggedInUserId,newMoon);
                                     break;
                                 case "11":
@@ -153,7 +162,7 @@ public class MainDriver {
                                     moonController.getAllMoons(loggedInUserId);
                                     System.out.print("Enter the moonId of the moon you want to remove: ");
                                     moonId =scanner.nextLine();
-                                    moonController.deleteMoon(Integer.parseInt(moonId),loggedInUserId);
+                                    moonController.deleteMoon(switchToInt(moonId),loggedInUserId);
                                     break;
                                 default:
                                     System.out.println("You chose to log out.");
